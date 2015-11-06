@@ -1,4 +1,4 @@
-package BigTicTac;
+package TicTacToe;
 
 
 

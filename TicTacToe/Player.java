@@ -1,4 +1,4 @@
-package BigTicTac;
+package TicTacToe;
 
 /**
  * Created by az on 03.11.15.
