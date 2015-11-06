@@ -1,4 +1,4 @@
-package Java.Programs.TicTacToe;
+package TicTacToe;
 
 /**
  * Created by Admin on 30.10.2015.
