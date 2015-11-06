@@ -105,37 +105,20 @@ class MmFrame extends JFrame{
                         arrayButton = new ArrayList<>();
                         dd.add(panel);
 
-
-
-
-
-
-
-
-
-                        for (int i = 0 , k = 0; i < w; i++)
-                        {
-                            for (int j = 0; j < h; j++ , k++)
-                            {
-
+                        for (int i = 0 , k = 0; i < w; i++){
+                            for (int j = 0; j < h; j++ , k++){
                                 arrayButton.add(new Button(j , i , "" + k ) );
                                 panel.add(arrayButton.get(k));
-                                //  if (k > w*h)
-                                //  arrayButton.add(new Button(j, i, "" + k));
-
                             }
-
-
                         }
 
                         pack();
                         dd.repaint();
 
-
-                        new Logic(arrayButton , w, h , l , playerName);
-
-
-
+//                        new Logic(arrayButton , w, h , l , playerName);
+                        Logic.rows = w;
+                        Logic.columns = h;
+                        Logic.line = l;
                         dd.setEnabled(true);
                         frameConfMenu.setVisible(false);
                         Logic.gameStart();
@@ -224,6 +207,7 @@ class MmFrame extends JFrame{
         JMenuItem itemAbout = new JMenuItem("О программе");
         JMenuItem itemCreateNewField = new JMenuItem("Изменение игрового поля");
         JMenuItem itemChangeName = new JMenuItem("Изменение имени");
+        JMenuItem itemStatisticReset = new JMenuItem("Сброс статистики");
 
         itemNewGame.addActionListener(new ActionListener()
         {
@@ -231,6 +215,17 @@ class MmFrame extends JFrame{
             public void actionPerformed(ActionEvent e)
             {
                 Logic.gameStart();
+            }
+        });
+        itemStatisticReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int d =JOptionPane.showConfirmDialog(null,"Вы действительно хотите обнулить статистику?","",0);
+                if (d==0){
+                    Logic.comp.setCountWins(0);
+                    Logic.human.setCountWins(0);
+                    Logic.noneWins = 0;
+                }
             }
         });
         itemQuit.addActionListener(new ActionListener()
@@ -341,6 +336,7 @@ class MmFrame extends JFrame{
 
         menuFile.add(itemNewGame);
         menuFile.addSeparator();
+        menuFile.add(itemStatisticReset);
         menuFile.add(itemQuit);
         menuInfo.add(itemStatistic);
         menuInfo.add(itemInstruction);

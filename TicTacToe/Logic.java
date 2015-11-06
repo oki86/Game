@@ -18,7 +18,7 @@ public final class Logic{
     static int rows;
     static int columns;
     static int noneWins;
-    static private int line;
+    static int line;
     static String currentPlayer = null;
     static ArrayList<Integer[]> probabilityArrays ;
     static PlayerComp comp;
