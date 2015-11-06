@@ -1,43 +1,51 @@
-package TicTacToe;
+package BigTicTac;
 
 /**
- * Created by Admin on 30.10.2015.
+ * Created by az on 03.11.15.
  */
-public abstract class Player
+public class Player
 {
+
     private String name;
-    private int countWin = 0;
-    private String symbol;
+    private String murk;
+    private int countWins = 0;
 
 
-    public String getSymbol() {
-        return symbol;
+    public Player(String name, String murk){
+
+        if (name==null || name.equals("")) this.name = "Player";
+        else this.name = name;
+        this.murk = murk;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
 
-    public Player(String name , String symbol){
-        this.name = name;
-        this.symbol = symbol;
-    }
-
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public int getCountWin() {
-        return countWin;
+    public String getMurk()
+    {
+        return murk;
     }
 
-    public void setCountWin(int countWin) {
-        this.countWin = countWin;
+    public void setMurk(String murk)
+    {
+        this.murk = murk;
     }
 
+    public int getCountWins()
+    {
+        return countWins;
+    }
 
+    public void setCountWins(int countWins)
+    {
+        this.countWins = countWins;
+    }
 }
