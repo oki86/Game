@@ -43,19 +43,19 @@ public class Main
 
 class MmFrame extends JFrame{
 
-    static ArrayList<Button> arrayButton = new ArrayList<>();
-    static int line = 5;
-    JFrame frameConfMenu = null;
-    JFrame frameChangeName = null;
-    GridLayout gridLayout = new GridLayout();
-    JPanel panel;
+    static private ArrayList<Button> arrayButton = new ArrayList<>();
+    static private int  line = 5;
+    private JFrame frameConfMenu = null;
+    private JFrame frameChangeName = null;
+    private GridLayout gridLayout = new GridLayout();
+    private JPanel panel;
     private String playerName = null;
 
 
 
     public void ConfMenu(){
 
-        final MmFrame dd ;
+        final MmFrame currenFrame ;
 
 
         if (frameConfMenu == null) {
@@ -66,8 +66,8 @@ class MmFrame extends JFrame{
             southPanel.setLayout(new GridLayout(1,2));
             centerPanel.setLayout(new GridLayout(3,2));
 
-            dd = this;
-            dd.setEnabled(false);
+            currenFrame = this;
+            currenFrame.setEnabled(false);
 
             JButton buttonOk = new JButton("Ок");
             JButton buttonCancel = new JButton("Отмена");
@@ -79,7 +79,7 @@ class MmFrame extends JFrame{
             buttonCancel.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    dd.setEnabled(true);
+                    currenFrame.setEnabled(true);
                     frameConfMenu.setVisible(false);
 
 
@@ -99,11 +99,11 @@ class MmFrame extends JFrame{
                     }else {
                         gridLayout = new GridLayout(w,h);
                         line = l;
-                        dd.remove(panel);
+                        currenFrame.remove(panel);
                         panel = new JPanel();
                         panel.setLayout(gridLayout);
                         arrayButton = new ArrayList<>();
-                        dd.add(panel);
+                        currenFrame.add(panel);
 
                         for (int i = 0 , k = 0; i < w; i++){
                             for (int j = 0; j < h; j++ , k++){
@@ -113,13 +113,13 @@ class MmFrame extends JFrame{
                         }
 
                         pack();
-                        dd.repaint();
+                        currenFrame.repaint();
 
 //                        new Logic(arrayButton , w, h , l , playerName);
-                        Logic.rows = w;
-                        Logic.columns = h;
-                        Logic.line = l;
-                        dd.setEnabled(true);
+                        Logic.setRows(w);
+                        Logic.setColumns(h);
+                        Logic.setLine(l);
+                        currenFrame.setEnabled(true);
                         frameConfMenu.setVisible(false);
                         Logic.gameStart();
                     }
@@ -153,7 +153,7 @@ class MmFrame extends JFrame{
 
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    dd.setEnabled(true);
+                    currenFrame.setEnabled(true);
                 }
 
                 @Override
@@ -181,7 +181,7 @@ class MmFrame extends JFrame{
 
                 }
             });
-            frameConfMenu.setLocationRelativeTo(dd);
+            frameConfMenu.setLocationRelativeTo(currenFrame);
             frameConfMenu.setTitle("Изменение игрового поля");
 
         }
@@ -222,9 +222,9 @@ class MmFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 int d =JOptionPane.showConfirmDialog(null,"Вы действительно хотите обнулить статистику?","",0);
                 if (d==0){
-                    Logic.comp.setCountWins(0);
-                    Logic.human.setCountWins(0);
-                    Logic.noneWins = 0;
+                    Logic.getComp().setCountWins(0);
+                    Logic.getHuman().setCountWins(0);
+                    Logic.setNoneWins(0);
                 }
             }
         });
@@ -240,9 +240,9 @@ class MmFrame extends JFrame{
         {
             @Override
             public void actionPerformed(ActionEvent e)
-            {JOptionPane.showMessageDialog(null,"Игрок " + Logic.human.getName() + " выиграл: " + Logic.human.getCountWins() + " раз.\n" +
-                    "Компьютер " + Logic.comp.getName() + " выиграл: " + Logic.comp.getCountWins() + " раз. \n\n" +
-                    "В ничью сиграно: " + Logic.noneWins + " раз."
+            {JOptionPane.showMessageDialog(null,"Игрок " + Logic.getHuman().getName() + " выиграл: " + Logic.getHuman().getCountWins() + " раз.\n" +
+                    "Компьютер " + Logic.getComp().getName() + " выиграл: " + Logic.getComp().getCountWins() + " раз. \n\n" +
+                    "В ничью сиграно: " + Logic.getNoneWins() + " раз."
 
                     ,"Статистика",JOptionPane.INFORMATION_MESSAGE,null); }
         });
@@ -308,8 +308,8 @@ class MmFrame extends JFrame{
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             if (!jTextField.getText().equals("")){
-                                if (radioUser.isSelected())Logic.human.setName(jTextField.getText());
-                                else Logic.comp.setName(jTextField.getText());
+                                if (radioUser.isSelected())Logic.getHuman().setName(jTextField.getText());
+                                else Logic.getComp().setName(jTextField.getText());
                             }else JOptionPane.showMessageDialog(null,"Имя небыло изменено, так как вы его не указали!","Изменение имени",JOptionPane.ERROR_MESSAGE);
 
                             frameChangeName.setVisible(false);
@@ -373,12 +373,6 @@ class MmFrame extends JFrame{
 
     }
 
-
-
-
-
-
-
 }
 
 
@@ -386,16 +380,13 @@ class Button extends JButton implements ActionListener{
     private int x;
     private int y;
     private String name;
-
-    private Line2D.Double lineThatWin = null;  // = new Line2D.Double(50, 0 + 1, 50, 300 - 1);
-
+    private Line2D.Double lineThatWin = null;
 
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        //  g.drawString("This is my custom Panel!",10,20);
         if (lineThatWin != null){
             g2.setPaint(Color.blue);
             g2.setStroke(new BasicStroke(2));
@@ -403,7 +394,6 @@ class Button extends JButton implements ActionListener{
         }
 
     }
-
 
     public void paint(int x){
         repaint();
@@ -435,8 +425,6 @@ class Button extends JButton implements ActionListener{
 
     }
 
-
-
     public String getName(){
         return name;
     }
@@ -451,19 +439,11 @@ class Button extends JButton implements ActionListener{
         return y;
     }
 
-
-
-
-
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
-
-
-
-        if (getText().equals("") && Logic.gameEnable == true){
+    public void actionPerformed(ActionEvent e){
+        if (getText().equals("") && Logic.isGameEnable() == true){
             setBackground(Color.green);
-            setText(Logic.human.getMurk());
+            setText(Logic.getHuman().getMurk());
             Logic.process();
         }
 

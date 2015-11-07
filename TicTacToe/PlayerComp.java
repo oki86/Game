@@ -12,10 +12,7 @@ import java.util.Map;
 public class PlayerComp extends Player
 {
 
-    ArrayList<Integer[]> probabilityArrays ;
-
-    public PlayerComp(String name, String murk)
-    {
+    public PlayerComp(String name, String murk) {
         super(name, murk);
 
 
@@ -30,24 +27,24 @@ public class PlayerComp extends Player
         ArrayList<Integer[]> TarMy = new ArrayList<>();
 
 
-        if (Logic.currentStep < 1){
+        if (Logic.getCurrentStep() < 1){
 
-            int dd = (int)(Math.random() * Logic.rows) * (int)(Math.random() * Logic.columns);
-            Logic.buttons.get(dd ).setText(Logic.comp.getMurk());
+            int dd = (int)(Math.random() * Logic.getRows()) * (int)(Math.random() * Logic.getColumns());
+            Logic.getButtons().get(dd ).setText(Logic.getComp().getMurk());
             //
-            Logic.buttons.get(dd).setBackground(Color.red);
+            Logic.getButtons().get(dd).setBackground(Color.red);
 
             return;
         }
 
 
-        int size = Logic.probabilityArrays.size();
+        int size = Logic.getProbabilityArrays().size();
 
 
         for (int z = 0; z < size; z++)
         {
 
-            Integer[] a = Logic.probabilityArrays.get(z);
+            Integer[] a = Logic.getProbabilityArrays().get(z);
             int count = 0;
             String X;
             int tempMySerious = 0;
@@ -57,73 +54,52 @@ public class PlayerComp extends Player
 
 
             for (int i = 0; i < Logic.getLine(); i++){
-
-
-                X = Logic.buttons.get(a[i]).getText();
-
+                X = Logic.getButtons().get(a[i]).getText();
                 if (X.equals("") && tempTarget == null) tempTarget = a[i].toString();
-
-                if ( X.equals(Logic.comp.getMurk()) )
-                {
+                if ( X.equals(Logic.getComp().getMurk()) ){
                     tempMySerious++;
                     tempEnemySerious = tempEnemySerious - Logic.getLine();
                 }
 
-                if ( X.equals(Logic.human.getMurk()) ){
+                if ( X.equals(Logic.getHuman().getMurk()) ){
                     tempEnemySerious++;
                     tempMySerious = tempMySerious - Logic.getLine();
                 }
-
-
-
             }
-
-
-
-
-
 
             if (tempEnemySerious > enemySerious){
                 TarEnemy = new ArrayList<>();
-                TarEnemy.add(Logic.probabilityArrays.get(z));
+                TarEnemy.add(Logic.getProbabilityArrays().get(z));
                 enemySerious = tempEnemySerious;
             }else if (tempEnemySerious == enemySerious){
-                TarEnemy.add(Logic.probabilityArrays.get(z));
+                TarEnemy.add(Logic.getProbabilityArrays().get(z));
             }
 
             if (tempMySerious > mySerious){
                 TarMy = new ArrayList<>();
-                TarMy.add(Logic.probabilityArrays.get(z));
+                TarMy.add(Logic.getProbabilityArrays().get(z));
                 mySerious = tempMySerious;
             }else if (tempMySerious == mySerious){
-                TarMy.add(Logic.probabilityArrays.get(z));
+                TarMy.add(Logic.getProbabilityArrays().get(z));
             }
-
-
-
-
-
         }
-
-
-
 
 
         if (mySerious == (Logic.getLine() - 1) ){
             int scan = scan(TarMy);
-            Logic.buttons.get(scan).setText(Logic.comp.getMurk());
+            Logic.getButtons().get(scan).setText(Logic.getComp().getMurk());
             //
-            Logic.buttons.get(scan).setBackground(Color.red);
+            Logic.getButtons().get(scan).setBackground(Color.red);
         }else if (enemySerious == (Logic.getLine() - 1)){
             int scan = scan(TarEnemy);
-            Logic.buttons.get(scan).setText(Logic.comp.getMurk());
+            Logic.getButtons().get(scan).setText(Logic.getComp().getMurk());
             //
-            Logic.buttons.get(scan).setBackground(Color.red);
+            Logic.getButtons().get(scan).setBackground(Color.red);
         }else if (mySerious <= 0 && enemySerious <= 0){
-            for (Button b : Logic.buttons){
+            for (Button b : Logic.getButtons()){
                 if (b.getText().equals(""))
                 {
-                    b.setText(Logic.comp.getMurk());
+                    b.setText(Logic.getComp().getMurk());
                     //
                     b.setBackground(Color.red);
                     return;
@@ -131,14 +107,14 @@ public class PlayerComp extends Player
             }
         }else if (mySerious >= enemySerious){
             int scan = scan(TarMy);
-            Logic.buttons.get(scan).setText(Logic.comp.getMurk());
+            Logic.getButtons().get(scan).setText(Logic.getComp().getMurk());
             //
-            Logic.buttons.get(scan).setBackground(Color.red);
+            Logic.getButtons().get(scan).setBackground(Color.red);
         }else {
             int scan = scan(TarEnemy);
-            Logic.buttons.get(scan).setText(Logic.comp.getMurk());
+            Logic.getButtons().get(scan).setText(Logic.getComp().getMurk());
             //
-            Logic.buttons.get(scan).setBackground(Color.red);
+            Logic.getButtons().get(scan).setBackground(Color.red);
         }
 
 
@@ -177,7 +153,7 @@ public class PlayerComp extends Player
         int i = 0;
         int max_value= 0;
         for (Map.Entry<Integer, Integer>uu : hashMap.entrySet()){
-            if (i < uu.getValue() && Logic.buttons.get(uu.getKey()).getText().equals("")){
+            if (i < uu.getValue() && Logic.getButtons().get(uu.getKey()).getText().equals("")){
                 i = uu.getValue();
                 max_value = uu.getKey();
             }

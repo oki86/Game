@@ -9,22 +9,17 @@ import java.util.Arrays;
  * Created by az on 04.11.15.
  */
 public final class Logic{
-
-
-
-
-
-    static ArrayList<Button> buttons;
-    static int rows;
-    static int columns;
-    static int noneWins;
-    static int line;
-    static String currentPlayer = null;
-    static ArrayList<Integer[]> probabilityArrays ;
-    static PlayerComp comp;
-    static PlayerHuman human;
-    static boolean gameEnable = true;
-    static int currentStep;
+    static private ArrayList<Button> buttons;
+    static private int rows;
+    static private int columns;
+    static private int noneWins;
+    static private int line;
+    static private String currentPlayer = null;
+    static private ArrayList<Integer[]> probabilityArrays ;
+    static private PlayerComp comp;
+    static private PlayerHuman human;
+    static private boolean gameEnable = true;
+    static private int currentStep;
 
     static public int getLine()
     {
@@ -101,16 +96,10 @@ public final class Logic{
 
 
     public static void gameEnd(){
-//        for (Button b : buttons){
-//            b.setEnabled(false);
-//        }
         Logic.gameEnable = false;
-
     }
 
     public static void gameStart(){
-
-
         gameEnable = true;
         currentStep = 0;
         addProbability();
@@ -195,10 +184,6 @@ public final class Logic{
                     }
                 }
 
-
-
-
-
                 JOptionPane.showMessageDialog(null, currentPlayer + " выиграл!!!","Win!!",1);
                 if (comp.getName().equals(currentPlayer))comp.setCountWins(comp.getCountWins() + 1);
                 else human.setCountWins(human.getCountWins() + 1);
@@ -227,5 +212,55 @@ public final class Logic{
 
     }
 
+    public static boolean isGameEnable() {
+        return gameEnable;
+    }
 
+    public static void setNoneWins(int noneWins) {
+        Logic.noneWins = noneWins;
+    }
+
+    public static void setRows(int rows) {
+        Logic.rows = rows;
+    }
+
+    public static void setLine(int line) {
+        Logic.line = line;
+    }
+
+    public static void setColumns(int columns) {
+        Logic.columns = columns;
+    }
+
+    public static PlayerHuman getHuman() {
+        return human;
+    }
+
+    public static ArrayList<Integer[]> getProbabilityArrays() {
+        return probabilityArrays;
+    }
+
+    public static int getCurrentStep() {
+        return currentStep;
+    }
+
+    public static PlayerComp getComp() {
+        return comp;
+    }
+
+    public static ArrayList<Button> getButtons() {
+        return buttons;
+    }
+
+    public static int getRows() {
+        return rows;
+    }
+
+    public static int getColumns() {
+        return columns;
+    }
+
+    public static int getNoneWins() {
+        return noneWins;
+    }
 }

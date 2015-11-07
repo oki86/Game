@@ -8,10 +8,6 @@ public class PlayerHuman extends Player
     public PlayerHuman(String name, String murk)
     {
         super(name, murk);
-
     }
-
-
-
 
 }
