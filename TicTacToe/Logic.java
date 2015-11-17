@@ -26,20 +26,22 @@ public final class Logic{
         return line;
     }
 
-    public Logic(ArrayList<Button> buttons , int rows, int columns , int line, String playerName ){
-        comp = new PlayerComp("Злой Комп","O" );
-        human = new PlayerHuman(playerName , "X");
-        this.buttons = buttons;
-        this.rows = rows;
-        this.columns = columns;
-        this.line = line;
-        noneWins = 0;
-        gameStart();
+    public Logic(){
+
 
     }
 
 
-
+public static void createNew(ArrayList<Button> buttons1 , int rows1, int columns1 , int line1, String playerName){
+    comp = new PlayerComp("Злой Комп","O" );
+    human = new PlayerHuman(playerName , "X");
+    buttons = buttons1;
+    rows = rows1;
+    columns = columns1;
+    line = line1;
+    noneWins = 0;
+    gameStart();
+}
 
 
     public static void addProbability(){
@@ -60,11 +62,13 @@ public final class Logic{
             }
 
 
-            if (b.getXl()+ line <= rows && b.getYl()+ line <= columns){
+            if (b.getXl()+ line <= columns && b.getYl()+ line <= rows){
+
                 Integer[] dd = new Integer[line];
                 for (int i = 0; i < line; i++)
                 {
-                    dd[i] = (b.getXl() + i) * columns + b.getYl() + i;
+                    dd[i] = b.getXl()+ i + columns * (b.getYl() +i);
+
                 }
                 probabilityArrays.add(dd);
             }
@@ -100,14 +104,16 @@ public final class Logic{
     }
 
     public static void gameStart(){
+        addProbability();
         gameEnable = true;
         currentStep = 0;
-        addProbability();
+
 
         for (Button b : buttons){
             b.setText("");
             b.setBackground(new ColorUIResource(238,238,238));
             b.depaint();
+
         }
 
         if ((int)(Math.random()*2)==1)
@@ -160,6 +166,8 @@ public final class Logic{
 
         for ( Integer[] a : probabilityArrays){
 
+            for (Integer d : a) System.out.print(d + ";");
+            System.out.println();
             int countHum = 0;
             int countComp = 0;
             String X;

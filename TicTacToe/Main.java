@@ -43,8 +43,8 @@ public class Main
 
 class MmFrame extends JFrame{
 
-    static private ArrayList<Button> arrayButton = new ArrayList<>();
-    static private int  line = 5;
+    private ArrayList<Button> arrayButton = new ArrayList<>();
+    private int  line = 5;
     private JFrame frameConfMenu = null;
     private JFrame frameChangeName = null;
     private GridLayout gridLayout = new GridLayout();
@@ -121,7 +121,7 @@ class MmFrame extends JFrame{
                         Logic.setLine(l);
                         currenFrame.setEnabled(true);
                         frameConfMenu.setVisible(false);
-                        Logic.gameStart();
+                        Logic.createNew(arrayButton , gridLayout.getRows(), gridLayout.getColumns() , line , playerName);
                     }
                 }
             });
@@ -366,7 +366,7 @@ class MmFrame extends JFrame{
             }
         }
 
-        new Logic(arrayButton , gridLayout.getRows(), gridLayout.getColumns() , line , playerName);
+        Logic.createNew(arrayButton , gridLayout.getRows(), gridLayout.getColumns() , line , playerName);
         pack();
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
